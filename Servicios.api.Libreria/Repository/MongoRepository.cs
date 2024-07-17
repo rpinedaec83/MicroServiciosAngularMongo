@@ -3,6 +3,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using Servicios.api.Libreria.Core;
 using Servicios.api.Libreria.Core.Entities;
+using System.Linq.Expressions;
 
 namespace Servicios.api.Libreria.Repository
 {
@@ -49,6 +50,96 @@ namespace Servicios.api.Libreria.Repository
         {
             var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, id);
             return await _collection.Find(filter).SingleOrDefaultAsync();
+        }
+
+        public async Task<PaginationEntity<TDocument>> PaginationBy(
+            Expression<Func<TDocument, bool>> filterExpression,
+            PaginationEntity<TDocument> pagination
+            )
+        {
+            var sort = Builders<TDocument>.Sort.Ascending(pagination.Sort);
+            if (pagination.SortDirection == "desc")
+            {
+                sort = Builders<TDocument>.Sort.Descending(pagination.Sort);
+            }
+
+            if (string.IsNullOrEmpty(pagination.Filter))
+            {
+                pagination.Data = await _collection.Find(p => true)
+                    .Sort(sort)
+                    .Skip((pagination.Page - 1) * pagination.PageSize)
+                    .Limit(pagination.PageSize)
+                    .ToListAsync();
+            }
+            else
+            {
+                pagination.Data = await _collection.Find(filterExpression)
+                    .Sort(sort)
+                    .Skip((pagination.Page - 1) * pagination.PageSize)
+                    .Limit(pagination.PageSize)
+                    .ToListAsync();
+
+            }
+
+            long totalDocument = await _collection.CountDocumentsAsync(FilterDefinition<TDocument>.Empty);
+            var totalPages = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(totalDocument / pagination.PageSize)));
+            pagination.PagesQuantity = totalPages;
+
+            return pagination;
+
+        }
+
+        public async Task<PaginationEntity<TDocument>> PaginationByFilter(PaginationEntity<TDocument> pagination)
+        {
+            var sort = Builders<TDocument>.Sort.Ascending(pagination.Sort);
+            if (pagination.SortDirection == "desc")
+            {
+                sort = Builders<TDocument>.Sort.Descending(pagination.Sort);
+            }
+
+
+            var totalDocuments = 0;
+            if (pagination.FilterValue == null)
+            {
+                pagination.Data = await _collection.Find(p => true)
+                                   .Sort(sort)
+                                   .Skip((pagination.Page - 1) * pagination.PageSize)
+                                   .Limit(pagination.PageSize)
+                                   .ToListAsync();
+
+
+                totalDocuments = (await _collection.Find(p => true).ToListAsync()).Count();
+            }
+            else
+            {
+
+                var valueFilter = ".*" + pagination.FilterValue.Valor + ".*";
+                var filter = Builders<TDocument>.Filter.Regex(pagination.FilterValue.Propiedad, new BsonRegularExpression(valueFilter, "i"));
+
+                pagination.Data = await _collection.Find(filter)
+                                   .Sort(sort)
+                                   .Skip((pagination.Page - 1) * pagination.PageSize)
+                                   .Limit(pagination.PageSize)
+                                   .ToListAsync();
+
+                totalDocuments = (await _collection.Find(filter).ToListAsync()).Count();
+
+
+            }
+            //libro = 1000
+            //long totalDocuments = await _collection.CountDocumentsAsync(FilterDefinition<TDocument>.Empty);
+
+            ///libro = 56
+
+            var rounded = Math.Ceiling(totalDocuments / Convert.ToDecimal(pagination.PageSize));
+
+            var totalPages = Convert.ToInt32(rounded);
+
+            pagination.PagesQuantity = totalPages;
+            pagination.TotalRows = Convert.ToInt32(totalDocuments);
+
+
+            return pagination;
         }
     }
 }

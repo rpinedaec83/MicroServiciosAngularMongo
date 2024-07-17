@@ -1,4 +1,5 @@
 ﻿using Servicios.api.Libreria.Core.Entities;
+using System.Linq.Expressions;
 
 namespace Servicios.api.Libreria.Repository
 {
@@ -9,5 +10,14 @@ namespace Servicios.api.Libreria.Repository
         Task InsertDocument(TDocument document);
         Task UpdateDocument(TDocument document);
         Task DeleteById(string id);
+
+        Task<PaginationEntity<TDocument>> PaginationBy(
+           Expression<Func<TDocument, bool>> filterExpression,
+           PaginationEntity<TDocument> pagination
+           );
+
+        Task<PaginationEntity<TDocument>> PaginationByFilter(
+            PaginationEntity<TDocument> pagination
+            );
     }
 }
