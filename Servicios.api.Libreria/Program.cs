@@ -17,6 +17,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("CorsRule", rule =>
+    {
+        rule.AllowAnyHeader().AllowAnyMethod().WithOrigins("*");
+    });
+});
+
 builder.Services.Configure<MongoSettings>(
     options => {
         options.ConnectionString = builder.Configuration.GetSection("MongoDB:ConnectionString").Value;
@@ -38,8 +46,9 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
 
+}
+app.UseCors("CorsRule");
 app.UseAuthorization();
 
 app.MapControllers();
