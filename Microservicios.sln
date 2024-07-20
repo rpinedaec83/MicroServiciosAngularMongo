@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Servicios.api.Libreria", "Servicios.api.Libreria\Servicios.api.Libreria.csproj", "{57135C98-D555-4FDF-9F82-C701BB669297}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicios.api.Libreria", "Servicios.api.Libreria\Servicios.api.Libreria.csproj", "{57135C98-D555-4FDF-9F82-C701BB669297}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicios.api.Seguridad", "Servicios.api.Seguridad\Servicios.api.Seguridad.csproj", "{5FAF8F7D-74CC-441F-BA77-A8574FB3C6AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{57135C98-D555-4FDF-9F82-C701BB669297}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57135C98-D555-4FDF-9F82-C701BB669297}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57135C98-D555-4FDF-9F82-C701BB669297}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FAF8F7D-74CC-441F-BA77-A8574FB3C6AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FAF8F7D-74CC-441F-BA77-A8574FB3C6AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FAF8F7D-74CC-441F-BA77-A8574FB3C6AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FAF8F7D-74CC-441F-BA77-A8574FB3C6AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
