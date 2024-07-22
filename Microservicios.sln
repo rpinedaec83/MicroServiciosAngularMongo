@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicios.api.Libreria", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicios.api.Seguridad", "Servicios.api.Seguridad\Servicios.api.Seguridad.csproj", "{5FAF8F7D-74CC-441F-BA77-A8574FB3C6AF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Servicios.api.Gateway", "Servicios.api.Gateway\Servicios.api.Gateway.csproj", "{20FAE8A6-D931-48C3-AC80-FF7EA4808DDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5FAF8F7D-74CC-441F-BA77-A8574FB3C6AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FAF8F7D-74CC-441F-BA77-A8574FB3C6AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FAF8F7D-74CC-441F-BA77-A8574FB3C6AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20FAE8A6-D931-48C3-AC80-FF7EA4808DDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20FAE8A6-D931-48C3-AC80-FF7EA4808DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20FAE8A6-D931-48C3-AC80-FF7EA4808DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20FAE8A6-D931-48C3-AC80-FF7EA4808DDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
