@@ -1,56 +1,26 @@
-using Servicios.api.Libreria.Core;
-using Servicios.api.Libreria.Core.ContextMongoDB;
-using Servicios.api.Libreria.Repository;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-//Crea la configuracion de la aplicacion
-builder.Configuration
-    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-    .AddEnvironmentVariables()
-    .AddCommandLine(args);// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddCors(opt =>
+namespace Servicios.api.Libreria
 {
-    opt.AddPolicy("CorsRule", rule =>
+    public class Program
     {
-        rule.AllowAnyHeader().AllowAnyMethod().WithOrigins("*");
-    });
-});
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
 
-builder.Services.Configure<MongoSettings>(
-    options => {
-        options.ConnectionString = builder.Configuration.GetSection("MongoDB:ConnectionString").Value;
-        options.Database = builder.Configuration.GetSection("MongoDB:Database").Value;
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
     }
-);
-
-builder.Services.AddSingleton<MongoSettings>();
-builder.Services.AddTransient<IAutorContext, AutorContext>();
-builder.Services.AddTransient<IAutorRepository, AutorRepository>();
-builder.Services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
-
-
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-
 }
-app.UseCors("CorsRule");
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();

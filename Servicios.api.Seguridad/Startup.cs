@@ -21,7 +21,6 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using Servicios.api.Seguridad.Core.Application;
 using Servicios.api.Seguridad.Core.Entities;
 using Servicios.api.Seguridad.Core.JwtLogic;
@@ -44,10 +43,7 @@ namespace Servicios.api.Seguridad
         {
             
             services.AddControllers().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Register>());
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Servicios.api.Seguridad", Version = "v1" });
-            });
+
             services.AddDbContext<SeguridadContexto>(opt =>
             {
                 opt.UseSqlServer(Configuration.GetConnectionString("ConexionDB"));
@@ -101,8 +97,6 @@ namespace Servicios.api.Seguridad
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Servicios.api.Libreria v1"));
             }
 
             app.UseRouting();

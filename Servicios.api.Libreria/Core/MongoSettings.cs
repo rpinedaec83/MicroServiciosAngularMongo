@@ -1,4 +1,9 @@
-﻿namespace Servicios.api.Libreria.Core
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Servicios.api.Libreria.Core
 {
     public class MongoSettings
     {

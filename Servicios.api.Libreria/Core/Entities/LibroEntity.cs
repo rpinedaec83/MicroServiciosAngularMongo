@@ -1,9 +1,13 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Servicios.api.Libreria.Core.Entities
 {
     [BsonCollection("Libro")]
-    public class LibroEntity: Document
+    public class LibroEntity : Document
     {
         [BsonElement("titulo")]
         public string Titulo { get; set; }
@@ -19,5 +23,6 @@ namespace Servicios.api.Libreria.Core.Entities
 
         [BsonElement("autor")]
         public AutorEntity Autor { get; set; }
+
     }
 }
